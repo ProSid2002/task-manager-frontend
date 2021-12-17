@@ -1,23 +1,98 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+// Axios
+import axios from "axios";
+
+// Routing
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+// Layouts
+import Navigation from "./components/layouts/Navigation";
+
+// Pages
+import Home from "./components/pages/Home";
+import About from "./components/pages/About";
+
+// User
+import LoginUser from "./components/user/LoginUser";
+import { useEffect, useState } from "react";
+import UserProfile from "./components/user/UserProfile";
+import SignupUser from "./components/user/SignupUser";
+import UpdateUser from "./components/user/UpdateUser";
+import PicUpload from "./components/user/PicUpload";
+
+// Tasks
+import AddTask from "./components/tasks/AddTask";
+import EditTask from "./components/tasks/EditTask";
+
+// Axios defaults
+axios.defaults.baseURL = "https://sidshar-task-manager-api.herokuapp.com";
+axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem(
+  "token"
+)}`;
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    localStorage.getItem("token") ? true : false
+  );
+  const [error, setError] = useState(null);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Router>
+        <Navigation
+          isLoggedIn={isLoggedIn}
+          setIsLoggedIn={setIsLoggedIn}
+          setError={setError}
+        />
+        {error ? (
+          <div className="text-danger mt-4">
+            {" "}
+            <h4>{error}</h4>
+          </div>
+        ) : (
+          <></>
+        )}
+        <Routes>
+          <Route
+            exact
+            path="/"
+            element={<Home isLoggedIn={isLoggedIn} />}
+          ></Route>
+          <Route exact path="/about" element={<About />}></Route>
+          <Route
+            exact
+            path="/user/profile"
+            element={
+              <UserProfile
+                setIsLoggedIn={setIsLoggedIn}
+                isLoggedIn={isLoggedIn}
+              />
+            }
+          ></Route>
+          <Route exact path="/tasks/add" element={<AddTask />} />
+          {isLoggedIn ? (
+            <>
+              <Route exact path="/edit/:id" element={<EditTask />} />
+              <Route exact path="/user/update" element={<UpdateUser />} />
+              <Route exact path="/user/picupload" element={<PicUpload />} />
+            </>
+          ) : (
+            <>
+              <Route
+                exact
+                path="/user/login"
+                element={<LoginUser setIsLoggedIn={setIsLoggedIn} />}
+              ></Route>
+              <Route
+                exact
+                path="/user/signup"
+                element={<SignupUser setIsLoggedIn={setIsLoggedIn} />}
+              ></Route>
+            </>
+          )}
+        </Routes>
+      </Router>
     </div>
   );
 }
