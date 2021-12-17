@@ -49,7 +49,7 @@ const Home = (props) => {
       <div className="container">
         <h1>Home</h1>
         <div className="table-responsive-lg">
-          <Table striped bordered hover size="sm" id="Table">
+          <Table bordered hover size="sm" id="Table">
             <thead className="bg-dark text-light">
               <tr>
                 <th>#</th>
