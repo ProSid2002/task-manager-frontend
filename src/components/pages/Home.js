@@ -41,8 +41,10 @@ const Home = (props) => {
     }
   };
 
-  useEffect(() => {
+  useEffect(async () => {
     loadTasks("tasks");
+    // const task = await axios.get("tasks/6346f68a90fd4e0016e076d9");
+    console.log(tasks);
   }, [props.isLoggedIn]);
   return (
     <>
