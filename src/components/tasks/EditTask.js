@@ -12,19 +12,6 @@ const EditTask = () => {
   const navigate = useNavigate();
   const [currTask, setCurrTask] = useState({ checked: false });
 
-  const editTask = async () => {
-    try {
-      const task = await axios.get(`/tasks/${id}`);
-      setCurrTask(task.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    editTask();
-  }, [currTask]);
-
   const updateTaskData = async (e) => {
     try {
       e.preventDefault();
@@ -59,7 +46,6 @@ const EditTask = () => {
             id="form4Example3"
             rows="4"
             placeholder="Enter Description"
-            value={currTask.description}
             onChange={(e) => setDesc(e.target.value)}
           ></textarea>
         </div>
@@ -70,7 +56,6 @@ const EditTask = () => {
             type="checkbox"
             value=""
             id="form4Example4"
-            checked={`${currTask.checked}`}
             onChange={(e) => setComp(e.target.checked)}
           />
           <label className="form-check-label" htmlFor="form4Example4">
