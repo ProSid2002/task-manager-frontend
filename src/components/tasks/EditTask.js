@@ -10,7 +10,7 @@ const EditTask = () => {
   const [error, setError] = useState(null);
   const { id } = useParams();
   const navigate = useNavigate();
-  const [currTask, setCurrTask] = useState({});
+  const [currTask, setCurrTask] = useState({ checked: false });
 
   const editTask = async () => {
     try {
