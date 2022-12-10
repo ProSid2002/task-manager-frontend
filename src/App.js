@@ -28,7 +28,7 @@ import AddTask from "./components/tasks/AddTask";
 import EditTask from "./components/tasks/EditTask";
 
 // Axios defaults
-axios.defaults.baseURL = "https://sidshar-task-manager-api.herokuapp.com";
+axios.defaults.baseURL = "https://task-manager-api-idca.onrender.com";
 axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem(
   "token"
 )}`;
